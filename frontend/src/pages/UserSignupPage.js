@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export const UserSignupPage = () => {
+export const UserSignupPage = ({ actions = { postSignup: () => Promise.resolve() } }) => {
 
     const [displayName, setDisplayName] = useState("");
     const [username, setUsername] = useState("");
@@ -27,6 +27,15 @@ export const UserSignupPage = () => {
         setPasswordRepeat(value);
     }
 
+    const onClickSignUp = () => {
+        const user = {
+            username,
+            displayName,
+            password,
+        }
+        actions.postSignup(user);
+    }
+
     return (
         <div>
             <h1>Sign Up</h1>
@@ -37,13 +46,13 @@ export const UserSignupPage = () => {
                 <input placeholder="Your username" value={username} onChange={onChangeUsername} />
             </div>
             <div>
-                <input placeholder="Your password" type="password" value={password} onChange={onChangePassword}/>
+                <input placeholder="Your password" type="password" value={password} onChange={onChangePassword} />
             </div>
             <div>
                 <input placeholder="Repeat your password" type="password" value={passwordRepeat} onChange={onChangePasswordRepeat} />
             </div>
             <div>
-                <button>Sign Up</button>
+                <button onClick={onClickSignUp}>Sign Up</button>
             </div>
         </div>
     );
