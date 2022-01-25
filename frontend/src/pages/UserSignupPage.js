@@ -6,6 +6,7 @@ export const UserSignupPage = ({ actions = { postSignup: () => Promise.resolve()
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [passwordRepeat, setPasswordRepeat] = useState("");
+    const [pendingApiCall, setPendingApiCall] = useState(false);
 
     const onChangeDisplayName = event => {
         const value = event.target.value;
@@ -27,13 +28,19 @@ export const UserSignupPage = ({ actions = { postSignup: () => Promise.resolve()
         setPasswordRepeat(value);
     }
 
-    const onClickSignUp = () => {
+    const onClickSignUp = async () => {
         const user = {
             username,
             displayName,
             password,
         }
-        actions.postSignup(user);
+        setPendingApiCall(true);
+        try {
+            await actions.postSignup(user);
+            setPendingApiCall(false);
+        } catch(error) {
+            setPendingApiCall(false);
+        }
     }
 
     return (
@@ -56,7 +63,11 @@ export const UserSignupPage = ({ actions = { postSignup: () => Promise.resolve()
                 <input className="form-control" placeholder="Repeat your password" type="password" value={passwordRepeat} onChange={onChangePasswordRepeat} />
             </div>
             <div className="text-center">
-                <button className="btn btn-primary" onClick={onClickSignUp}>Sign Up</button>
+                <button className="btn btn-primary" onClick={onClickSignUp} disabled={pendingApiCall}>
+                    {pendingApiCall && (<div className="spinner-border text-light spinner-border-sm me-1" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>)}
+                    Sign Up</button>
             </div>
         </div>
     );
