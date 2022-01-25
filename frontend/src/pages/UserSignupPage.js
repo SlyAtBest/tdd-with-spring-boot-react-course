@@ -37,22 +37,26 @@ export const UserSignupPage = ({ actions = { postSignup: () => Promise.resolve()
     }
 
     return (
-        <div>
-            <h1>Sign Up</h1>
-            <div>
-                <input placeholder="Your display name" value={displayName} onChange={onChangeDisplayName} />
+        <div className="container">
+            <h1 className="text-center">Sign Up</h1>
+            <div className="col-12 mb-3">
+                <label>Display Name</label>
+                <input className="form-control" placeholder="Your display name" value={displayName} onChange={onChangeDisplayName} />
             </div>
-            <div>
-                <input placeholder="Your username" value={username} onChange={onChangeUsername} />
+            <div className="col-12 mb-3">
+                <label>Username</label>
+                <input className="form-control" placeholder="Your username" value={username} onChange={onChangeUsername} />
             </div>
-            <div>
-                <input placeholder="Your password" type="password" value={password} onChange={onChangePassword} />
+            <div className="col-12 mb-3">
+                <label>Password</label>
+                <input className="form-control" placeholder="Your password" type="password" value={password} onChange={onChangePassword} />
             </div>
-            <div>
-                <input placeholder="Repeat your password" type="password" value={passwordRepeat} onChange={onChangePasswordRepeat} />
+            <div className="col-12 mb-3">
+                <label>Password Repeat</label>
+                <input className="form-control" placeholder="Repeat your password" type="password" value={passwordRepeat} onChange={onChangePasswordRepeat} />
             </div>
-            <div>
-                <button onClick={onClickSignUp}>Sign Up</button>
+            <div className="text-center">
+                <button className="btn btn-primary" onClick={onClickSignUp}>Sign Up</button>
             </div>
         </div>
     );
